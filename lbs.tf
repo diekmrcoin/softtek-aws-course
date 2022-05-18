@@ -49,3 +49,5 @@ resource "aws_alb_target_group_attachment" "alb_tg_att_01" {
   target_id        = aws_instance.web_server_01.private_ip
   port             = 80
 }
+
+// TODO: listener rule redirect from /softtek to /softtek.html

@@ -33,3 +33,6 @@ resource "aws_instance" "web_server_01" {
     ]
   }
 }
+
+// TODO: Add web_server_02
+// TODO: Add softtek.html to user-data
