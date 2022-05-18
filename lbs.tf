@@ -7,7 +7,8 @@ resource "aws_alb" "main" {
   idle_timeout               = 10
   enable_deletion_protection = false
   depends_on = [
-    aws_instance.web_server_01
+    aws_instance.web_server_01,
+    aws_instance.web_server_02
   ]
 }
 
@@ -29,7 +30,8 @@ resource "aws_alb_target_group" "tg_main" {
     matcher             = "200-299"
   }
   depends_on = [
-    aws_instance.web_server_01
+    aws_instance.web_server_01,
+    aws_instance.web_server_02
   ]
 }
 
@@ -50,4 +52,26 @@ resource "aws_alb_target_group_attachment" "alb_tg_att_01" {
   port             = 80
 }
 
-// TODO: listener rule redirect from /softtek to /softtek.html
+resource "aws_alb_target_group_attachment" "alb_tg_att_02" {
+  target_group_arn = aws_alb_target_group.tg_main.arn
+  target_id        = aws_instance.web_server_02.private_ip
+  port             = 80
+}
+
+resource "aws_alb_listener_rule" "rule_redirection" {
+  listener_arn = aws_alb_listener.front_end.arn
+
+  action {
+    type = "redirect"
+    redirect {
+      status_code = "HTTP_301"
+      path        = "/getParams.html"
+      query       = "p=#{path}"
+    }
+  }
+  condition {
+    path_pattern {
+      values = ["/softtek/*"]
+    }
+  }
+}

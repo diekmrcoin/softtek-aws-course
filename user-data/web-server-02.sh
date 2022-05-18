@@ -5,7 +5,7 @@ sudo systemctl start httpd
 sudo systemctl enable httpd
 
 # Hello world page
-echo "<h1>Hello World Sofftek!</h1><h2>Machine 01 listening</h2>" | sudo tee /var/www/html/index.html
+echo "<h1>Hello World Sofftek!</h1><h2>Machine 02 listening</h2>" | sudo tee /var/www/html/index.html
 
 # Page printing the parameters
 echo "<h1>GET: <span style='color:red' id='getParam'></span></h1>" | sudo tee -a /var/www/html/getParams.html
